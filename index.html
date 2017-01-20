@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>youtube capturing</title>
+    <style>
+        iframe {
+            position: absolute;
+            top: 0;
+            right: 0;
+        }
+        #frame {
+            position: relative;
+            display: inline-block;
+            width: 420px;
+            height: 300px;
+            overflow: hidden;
+        }
+        #result {
+            display: inline-block;
+            vertical-align: top;
+        }
+        #result canvas {
+            display: block;
+        }
+    </style>
+    <script src='https://cdn.rawgit.com/naptha/tesseract.js/1.0.10/dist/tesseract.js'></script>
+</head>
+<body>
+    <div id="frame">
+        <iframe width="1920" height="1080" src="https://www.youtube.com/embed/7WimRhydggo?start=1180&autoplay=1" frameborder="0" allowfullscreen></iframe>
+    </div>
+    <div id="result">
+        <div id="output"></div>
+        <canvas id="time"></canvas>
+        <canvas id="speed"></canvas>
+        <canvas id="alt"></canvas>
+    </div>
+    <video style="display:none"></video>
+    <script src="app.js"></script>
+</body>
+</html>
