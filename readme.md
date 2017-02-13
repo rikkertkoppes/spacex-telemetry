@@ -42,7 +42,7 @@ This will give you a stream of data. With that you could
 - listen to it with websockets
 - listen to it with raw tcp sockets
 
-[mhub-output](mhub-output.png)
+![mhub-output](mhub-output.png)
 
 ## improvements / plans
 
