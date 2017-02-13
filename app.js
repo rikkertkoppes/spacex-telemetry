@@ -226,7 +226,8 @@ function toBlackAndWhite(imageData, boundingBox) {
         if (segments.cols[col] === undefined) {
             segments.cols[col] = 0;
         }
-        segments.cols[col] = Math.max(segments.cols[col], bw);
+        segments.cols[col] = segments.cols[col] + bw;
+        // segments.cols[col] = Math.max(segments.cols[col], bw);
         data[i] = bw;
         data[i + 1] = bw;
         data[i + 2] = bw;
@@ -234,7 +235,8 @@ function toBlackAndWhite(imageData, boundingBox) {
     // visualize segments masks
     // for (var i = 0; i < data.length; i += 4) {
     //     var col = (i / 4) % boundingBox[2];
-    //     if (segments.cols[col]) {
+    //     var isWhite = segments.cols[col] > 255;
+    //     if (isWhite) {
     //         data[i+1] = 255;
     //     }
     // }
@@ -247,8 +249,9 @@ function toBlackAndWhite(imageData, boundingBox) {
     //      index: number
     // }
     // 
-    var slices = segments.cols.reduce((slices, isWhite, col) => {
+    var slices = segments.cols.reduce((slices, colValue, col) => {
         var last = slices[slices.length-1];
+        var isWhite = colValue > 255; //1 bright white pixels minimum
         if (isWhite && !last.start) {
             last.start = col;
         }
