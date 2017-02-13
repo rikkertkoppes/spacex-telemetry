@@ -9,13 +9,13 @@ getOwnWindow().then(win => {
 }).catch(e => {
     console.log('getUserMediaError: ' + JSON.stringify(e, null, '---'));
 }).then(video => {
-    //give a canvas element selector and a bounding box
+    //give a name and a bounding box
     //giving x,y,width and height
     loadChars();
     initCapture(video, {
-        '#time': [100, 44, 200, 23],
-        '#speed': [70, 224, 105, 23],
-        '#alt': [265, 222, 105, 23]
+        'time': [100, 44, 200, 23],
+        'speed': [70, 224, 105, 23],
+        'altitude': [265, 222, 105, 23]
     });
 });
 
@@ -81,9 +81,10 @@ function initCapture(video, slices) {
      *     selector: the selector given
      * }
      */
-    var data = Object.keys(slices).map(selector => {
+    var data = Object.keys(slices).map(name => {
+        var selector = '#'+name;
         var el = document.querySelector(selector);
-        var boundingBox = slices[selector];
+        var boundingBox = slices[name];
         el.width = boundingBox[2];
         //two times the height to be able to draw a backbuffer
         el.height = boundingBox[3] * 2;
@@ -92,16 +93,18 @@ function initCapture(video, slices) {
             el,
             ctx,
             boundingBox,
-            selector
+            selector,
+            name
         };
     });
 
     // draw each slice
     function draw() {
-        let result = data.map(spec => {
+        let result = data.reduce((data, spec) => {
             let result = slice(spec.boundingBox, video, spec);
-            return result;
-        });
+            data[spec.name] = result;
+            return data;
+        }, {});
         log(result);
         requestAnimationFrame(draw);
     }
