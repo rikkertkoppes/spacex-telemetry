@@ -79,12 +79,14 @@ function initCapture(video, slices) {
      *     el: the canvas element given by the key selector
      *     ctx: the drawing context of the canvas
      *     boundingBox: the boundingBox [x,y,w,h] given by the value
-     *     selector: the selector given
+     *     name: the buffer name
      * }
      */
+    var buffers = document.querySelector('#buffers');
     var data = Object.keys(slices).map(name => {
         var selector = '#'+name;
-        var el = document.querySelector(selector);
+        var el = document.createElement('canvas');
+        buffers.appendChild(el);
         var boundingBox = slices[name];
         el.width = boundingBox[2];
         //two times the height to be able to draw a backbuffer
@@ -94,7 +96,6 @@ function initCapture(video, slices) {
             el,
             ctx,
             boundingBox,
-            selector,
             name
         };
     });
@@ -183,7 +184,6 @@ function slice(boundingBox, video, spec) {
         if (slice.start && slice.width) {
             //draw the slices as 16x16 images in the lower half of the canvas
             ctx.drawImage(el, slice.start, 0, slice.width, h, i* 16, h, 16, 16);
-            // if (spec.selector === '#alt') result += classify(spec, slice)
             result += classify(spec, slice)
         }
     })
