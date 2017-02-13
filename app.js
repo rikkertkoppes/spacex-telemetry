@@ -2,7 +2,6 @@ const {
     desktopCapturer
 } = require('electron');
 
-let output = document.querySelector('#output');
 
 getOwnWindow().then(win => {
     let video = document.querySelector('video');
