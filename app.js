@@ -124,7 +124,7 @@ function loadChars() {
     //copy image data to classifier canvas
     classifierContext.drawImage(document.querySelector('#chars'),0,0);
     //load the pixel data in the characters array
-    var w = 160, h = 16;
+    var w = 192, h = 16;
     var data = classifierContext.getImageData(0,0,w,h).data;
     for (var i=0; i<data.length; i+=4) {
         var col = (i / 4) % w;
