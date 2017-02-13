@@ -24,9 +24,28 @@ It is not much yet, but it does give some results:
 - calculate the similarity with predefined characters and get the best
 - use that to guess the character
 
+## doing stuff with the data
+
+The capture tries to send data over a local [mhub-server](https://github.com/poelstra/mhub). To set one up:
+
+- (install nodejs)
+- `npm install -g mhub`
+- `mhub-server`
+
+This launches an mhub server locally. If you want to see the data coming in, use
+
+- `mhub-client -l -o jsondata`
+
+This will give you a stream of data. With that you could
+
+- pipe it to another utility
+- listen to it with websockets
+- listen to it with raw tcp sockets
+
+[mhub-output](mhub-output.png)
+
 ## improvements / plans
 
-- put the results on a websocket message bus
 - better character segmentation (it is currently not properly segmented when the video resolution is low)
 - better character recognition, we may use a somewhat smarter algorithm, but it needs to be fast.
 - more user friendly ui.

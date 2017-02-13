@@ -3,6 +3,7 @@ const {
 } = require('electron');
 
 
+var socket = initWebSocket();
 getOwnWindow().then(win => {
     let video = document.querySelector('video');
     return init(win, video);
@@ -106,11 +107,11 @@ function initCapture(video, slices) {
             return data;
         }, {});
         log(result);
+        socket.send('telemetry',result);
         requestAnimationFrame(draw);
     }
 
     draw();
-    // scan();
 }
 
 var classifierContext = document.querySelector('#classifier').getContext('2d');
@@ -265,4 +266,43 @@ function toBlackAndWhite(imageData, boundingBox) {
 
     imageData.data = data;
     return [imageData, slices];
+}
+
+
+// initialize a websocket interface to a local mhub-server
+// to get one running locally
+// `npm install -g mhub`
+// `mhub-server`
+//
+// see https://github.com/poelstra/mhub for more info
+//
+// to see the data:
+// `mhub-client`
+function initWebSocket() {
+    ws = new WebSocket('ws://localhost:13900');
+
+    //subscribe to receive messages
+    ws.onopen = function() {
+        ws.send(JSON.stringify({
+            type: 'subscribe',
+            node: 'default'
+        }));
+    };
+
+    //handle messages received
+    ws.onmessage = function(msg) {
+        console.log(JSON.parse(msg.data));
+    };
+
+    //send messages
+    return {
+        send(topic, data) {
+            ws.send(JSON.stringify({
+                type: 'publish',
+                node: 'default',
+                data: data,
+                topic: topic
+            }));
+        }
+    }
 }
