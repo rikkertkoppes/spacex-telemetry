@@ -15,6 +15,7 @@
             width: 420px;
             height: 300px;
             overflow: hidden;
+            pointer-events: none;
         }
         #result {
             display: inline-block;
@@ -23,8 +24,14 @@
         #result canvas {
             display: block;
         }
+        #classifier {
+            width: 200px;
+            height: 16px;
+        }
+        #debug {
+            width: 200px;
+        }
     </style>
-    <script src='https://cdn.rawgit.com/naptha/tesseract.js/1.0.10/dist/tesseract.js'></script>
 </head>
 <body>
     <div id="frame">
@@ -35,6 +42,9 @@
         <canvas id="time"></canvas>
         <canvas id="speed"></canvas>
         <canvas id="alt"></canvas>
+        <canvas id="classifier" width="200" height="16"></canvas>
+        <img id="chars" src="characters.png">
+        <pre id="debug"></pre>
     </div>
     <video style="display:none"></video>
     <script src="app.js"></script>
