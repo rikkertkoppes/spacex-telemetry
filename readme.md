@@ -44,6 +44,69 @@ This will give you a stream of data. With that you could
 
 ![mhub-output](mhub-output.png)
 
+### some examples
+
+Pipe it to file:
+
+	mhub-client -l -o jsondata > data.txt
+
+Pipe it to mongodb:
+
+	mhub-client -l -o jsondata | mongoimport --db spacex --collection telemetry
+
+Listen to the bus in a website:
+
+	ws = new WebSocket('ws://localhost:13900');
+
+	//subscribe to receive messages
+	ws.onopen = function() {
+	    ws.send(JSON.stringify({
+	        type: 'subscribe',
+	        node: 'default'
+	    }));
+	};
+
+	//handle messages received
+	ws.onmessage = function(msg) {
+	    console.log(JSON.parse(msg.data));
+	};
+
+Listen with nodejs:
+
+	var MClient = require("mhub").MClient;
+
+	var client = new MClient("ws://localhost:13900");
+
+	//subscribe to receive messages
+	client.on("open", function() {
+	    client.subscribe("default");
+	});
+
+	//handle messages received
+	client.on("message", function(message) {
+	    console.log(message);
+	});
+
+Listen with python:
+
+	import websocket
+	import json
+
+	#subscribe to receive messages
+	def on_open(ws):
+	    ws.send('{"type":"subscribe","node":"default"}')
+
+	#handle messages received
+	def on_message(ws, message):
+	    print json.loads(message)
+
+
+	ws = websocket.WebSocketApp("ws://localhost:13900",
+	                            on_message = on_message,
+	                            on_open = on_open)
+
+	ws.run_forever()
+
 ## improvements / plans
 
 - better character segmentation (it is currently not properly segmented when the video resolution is low)
