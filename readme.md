@@ -44,6 +44,12 @@ This will give you a stream of data. With that you could
 
 ![mhub-output](mhub-output.png)
 
+### Early results
+
+- [crs10 raw data](crs10.txt)
+- [/u/srokap created a csv out of this](https://gist.github.com/Srokap/d35450d07bbfbd73b82625cd77b2ecaf)
+- [and a visualisation](https://imgur.com/a/u2ZcD)
+
 ### some examples
 
 Pipe it to file:
